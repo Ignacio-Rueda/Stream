@@ -3,6 +3,7 @@ package Java_Stream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -13,33 +14,41 @@ public class Test {
 
 
     public static void main(String[] args) {
-      
-        Factura f = new Factura("ordenador", 1000);
-        Factura f2 = new Factura("movil", 300);
-        Factura f3 = new Factura("impresora", 200);
-        Factura f4 = new Factura("imac", 1500);
+
+        List<Factura> listaFacturas = new ArrayList<>();
         
-        List<Factura> lista = new ArrayList<>();
-        
-        lista.add(f);
-        lista.add(f2);
-        lista.add(f3);
-        lista.add(f4);
-        //El método filter() nos permite seleccionar un flujo de elementos que satisfacen un predicado.
-        
-        /**
-         * Usamos la operación de filter para quedarnos con aquellas facturas que cumplen la condición.
-         * Los Streams diseñan un flujo de trabajo que se ejecuta de forma unitaria item a item.
-         * Busca el primer elemento cuyo importe supero los 300 euros y lo devuelve, una vez encontrado, 
-         * no sigues recorriendo el resto de la lista.
-         */
-        Factura resultadoUnico = lista.stream().filter(e->e.getPrecio()>300).findFirst().get();
-        System.out.println(resultadoUnico.getPrecio());
+        listaFacturas.add(new Factura("ordenador", 1000));
+        listaFacturas.add(new Factura("movil", 300));
+        listaFacturas.add(new Factura("impresora", 200));
+        listaFacturas.add(new Factura("imac", 1500));
+        listaFacturas.add(new Factura("torre-pc", 1280));
+        listaFacturas.add(new Factura("microfono", 890));
         
         
-        Stream<Factura> variosResultados = lista.stream().filter(r->r.getDispositivo().contains("o"));
         
-        variosResultados.forEach(e->System.out.println(e.getDispositivo()));
+        
+        
+        
+        
+        System.out.println("Imprimir todos los dispositivos superiores a 300 Euros");
+        System.out.println("-----------------------------------------------------");
+        Stream<Factura> resultadoA = listaFacturas.stream().filter(e->e.getPrecio()>300);
+        resultadoA.forEach(e->System.out.println(e.getDispositivo()+": "+e.getPrecio()));
+        
+        
+        System.out.println("Imprimir todos los dispositivos que comiencen por la letra 'i' ");
+        System.out.println("---------------------------------------------------------------");
+        Stream<Factura> resultadoB = listaFacturas.stream().filter(e->e.getDispositivo().startsWith("i"));
+        resultadoB.forEach(e->System.out.println(e.getDispositivo()));
+        
+        System.out.println("Buscamos dispositivos con un precio > 500 e inferior 1500 y lo almacenamos en una lista de tipo Factura");
+        System.out.println("-------------------------------------------------------------------------------------------------------");
+        List<Factura> resultadosBusqueda = listaFacturas.stream().filter(e->e.getPrecio()>500 && e.getPrecio()<1500).collect(Collectors.toList());
+        resultadosBusqueda.forEach(System.out::println);
+        
+              
+     
+   
             
         
         

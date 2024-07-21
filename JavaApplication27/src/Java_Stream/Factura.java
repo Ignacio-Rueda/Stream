@@ -26,6 +26,11 @@ public class Factura {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+        return "Factura{" + "dispositivo=" + dispositivo + ", precio=" + precio + '}';
+    }
     
     
     
